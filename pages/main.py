@@ -4,7 +4,7 @@ from utils.session import get_user, logout
 def render():
     user = get_user()
 
-    st.title(f"Bem-vindo, {user['nome']}")
+    st.title(f"Bem-vindo, {user['nick']}")
 
     if st.button("Logout"):
         logout()
