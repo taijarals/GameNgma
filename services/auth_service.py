@@ -7,10 +7,12 @@ supabase = create_client(
 )
 
 def login_user(email, senha):
-    response = supabase.auth.sign_in_with_password({
+    try:response = supabase.auth.sign_up({
         "email": email,
         "password": senha
     })
+    except Exception as e:
+        print(e)
 
     if response.user:
         return response.user
