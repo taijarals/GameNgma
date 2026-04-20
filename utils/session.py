@@ -7,7 +7,8 @@ def get_user():
     return st.session_state.get("user")
 
 def is_logged():
-    return "user" in st.session_state
+    return st.session_state.get("user") is not None
 
 def logout():
-    st.session_state.clear()
+    if "user" in st.session_state:
+        del st.session_state["user"]
