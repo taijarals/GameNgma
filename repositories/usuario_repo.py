@@ -1,10 +1,10 @@
-def get_user_profile(user_id):
-    response = supabase.table("usuario2") \
-        .select("*") \
-        .eq("id_usuario", user_id) \
-        .execute()
+from repositories.usuario_repo import get_user_profile
 
-    if response.data:
-        return response.data[0]
-    
-    return None
+def get_user_full(user):
+    profile = get_user_profile(user.id)
+
+    return {
+        "id": user.id,
+        "email": user.email,
+        "nick": profile["nick_usuario"] if profile else "Usuário"
+    }
