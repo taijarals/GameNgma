@@ -7,9 +7,6 @@ def render():
 
     aba = st.radio("Escolha uma opção", ["Login", "Cadastro"])
 
-    # =========================
-    # LOGIN
-    # =========================
     if aba == "Login":
         email = st.text_input("Email")
         senha = st.text_input("Senha", type="password")
@@ -18,7 +15,7 @@ def render():
             user = login_user(email, senha)
 
             if user:
-                user_full = get_user_full(user)  # 🔥 NOVO
+                user_full = get_user_full(user)
                 set_user(user_full)
 
                 st.success("Login realizado!")
@@ -26,9 +23,6 @@ def render():
             else:
                 st.error("Email ou senha inválidos")
 
-    # =========================
-    # CADASTRO
-    # =========================
     else:
         email = st.text_input("Email", key="cad_email")
         senha = st.text_input("Senha", type="password", key="cad_senha")
@@ -38,7 +32,7 @@ def render():
             user = register_user(email, senha, nick)
 
             if user:
-                user_full = get_user_full(user)  # 🔥 NOVO
+                user_full = get_user_full(user)
                 set_user(user_full)
 
                 st.success("Cadastro realizado!")

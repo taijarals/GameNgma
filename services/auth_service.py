@@ -7,40 +7,51 @@ supabase = create_client(
     settings.SUPABASE_KEY
 )
 
+# LOGIN
 def login_user(email, senha):
-    try:response = supabase.auth.sign_up({
-        "email": email,
-        "password": senha
-    })
+    try:
+        response = supabase.auth.sign_in_with_password({
+            "email": email,
+            "password": senha
+        })
     except Exception as e:
-        print(e)
+        print("Erro no login:", e)
+        return None
 
     if response.user:
         return response.user
-    
+
     return None
 
 
+# CADASTRO
 def register_user(email, senha, nick):
-    # 1. cria no auth
-    response = supabase.auth.sign_up({
-        "email": email,
-        "password": senha
-    })
+    try:
+        response = supabase.auth.sign_up({
+            "email": email,
+            "password": senha
+        })
+    except Exception as e:
+        print("Erro no cadastro:", e)
+        return None
 
     if not response.user:
         return None
 
     user_id = response.user.id
 
-    # 2. cria perfil
-    supabase.table("usuario2").insert({
-        "id_usuario": user_id,
-        "nick_usuario": nick
-    }).execute()
+    try:
+        supabase.table("usuario2").insert({
+            "id_usuario": user_id,
+            "nick_usuario": nick
+        }).execute()
+    except Exception as e:
+        print("Erro ao criar perfil:", e)
 
     return response.user
 
+
+# USER COMPLETO
 def get_user_full(user):
     profile = get_user_profile(user.id)
 

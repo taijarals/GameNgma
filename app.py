@@ -1,7 +1,5 @@
 import streamlit as st
 from utils.session import is_logged
-
-# páginas
 from pages import login, main
 
 st.set_page_config(page_title="Enigma Game")

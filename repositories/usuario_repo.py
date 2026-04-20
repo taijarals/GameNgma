@@ -1,10 +1,18 @@
-from repositories.usuario_repo import get_user_profile
+from supabase import create_client
+from config.settings import settings
 
-def get_user_full(user):
-    profile = get_user_profile(user.id)
+supabase = create_client(
+    settings.SUPABASE_URL,
+    settings.SUPABASE_KEY
+)
 
-    return {
-        "id": user.id,
-        "email": user.email,
-        "nick": profile["nick_usuario"] if profile else "Usuário"
-    }
+def get_user_profile(user_id):
+    response = supabase.table("usuario2") \
+        .select("*") \
+        .eq("id_usuario", user_id) \
+        .execute()
+
+    if response.data:
+        return response.data[0]
+
+    return None
