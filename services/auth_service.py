@@ -39,3 +39,12 @@ def register_user(email, senha, nick):
     }).execute()
 
     return response.user
+
+def get_user_full(user):
+    profile = get_user_profile(user.id)
+
+    return {
+        "id": user.id,
+        "email": user.email,
+        "nick": profile["nick_usuario"] if profile else None
+    }

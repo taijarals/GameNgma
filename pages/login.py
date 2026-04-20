@@ -1,5 +1,5 @@
 import streamlit as st
-from services.auth_service import login_user, register_user
+from services.auth_service import login_user, register_user, get_user_full
 from utils.session import set_user
 
 def render():
@@ -7,6 +7,9 @@ def render():
 
     aba = st.radio("Escolha uma opção", ["Login", "Cadastro"])
 
+    # =========================
+    # LOGIN
+    # =========================
     if aba == "Login":
         email = st.text_input("Email")
         senha = st.text_input("Senha", type="password")
@@ -15,13 +18,18 @@ def render():
             user = login_user(email, senha)
 
             if user:
-                set_user(user)
+                user_full = get_user_full(user)  # 🔥 NOVO
+                set_user(user_full)
+
                 st.success("Login realizado!")
                 st.rerun()
             else:
                 st.error("Email ou senha inválidos")
 
-    else:  # Cadastro
+    # =========================
+    # CADASTRO
+    # =========================
+    else:
         email = st.text_input("Email", key="cad_email")
         senha = st.text_input("Senha", type="password", key="cad_senha")
         nick = st.text_input("Nick", key="cad_nick")
@@ -30,7 +38,9 @@ def render():
             user = register_user(email, senha, nick)
 
             if user:
-                set_user(user)
+                user_full = get_user_full(user)  # 🔥 NOVO
+                set_user(user_full)
+
                 st.success("Cadastro realizado!")
                 st.rerun()
             else:
