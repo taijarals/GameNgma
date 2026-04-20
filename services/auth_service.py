@@ -1,5 +1,6 @@
 from supabase import create_client
 from config.settings import settings
+from repositories.usuario_repo import get_user_profile
 
 supabase = create_client(
     settings.SUPABASE_URL,
@@ -46,5 +47,5 @@ def get_user_full(user):
     return {
         "id": user.id,
         "email": user.email,
-        "nick": profile["nick_usuario"] if profile else None
+        "nick": profile["nick_usuario"] if profile else "Usuário"
     }
