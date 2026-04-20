@@ -1,5 +1,3 @@
-# services/auth_service.py
-
 from supabase import create_client
 from config.settings import settings
 
